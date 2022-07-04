@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import Note from './components/Note';
+import Button from './components/Button';
+import Form from './components/Form';
+import NoteList from './components/NoteList';
+import Title from './components/Title';
 
 const App = (props) => {
     const [notes, setNotes] = useState(props.notes)
@@ -25,21 +28,16 @@ const App = (props) => {
         setNewNote(e.target.value)
     }
 
+    const toogleShow = () =>{
+      setShowAll(!showAll)
+    }
+
     return (
       <div>
-        <h1>Notes</h1>
-        <div>
-            <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'important' : 'all' }</button>
-        </div>
-        <ul>
-          {notesToShow.map(note => (
-            <Note key={note.id} note={note}/>
-          ))}
-        </ul>
-        <form onSubmit={addNote}>
-            <input placeholder={newNote} id='inputNote' onChange={handleNoteChange} />
-            <button type='submit'>save</button>
-        </form>
+        <Title text='Notes' />
+        <Button action={toogleShow} showAll={showAll} />
+        <NoteList notes={notesToShow}/>
+        <Form addNote={addNote} newNote={newNote} handleNoteChange={handleNoteChange} />
       </div>
     );
   }

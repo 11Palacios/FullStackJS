@@ -3,7 +3,7 @@ import Button from './components/Button';
 import Form from './components/Form';
 import NoteList from './components/NoteList';
 import Title from './components/Title';
-import axios from 'axios';
+import noteService from './services.js/notes';
 
 const App = () => {
     const [notes, setNotes] = useState([])
@@ -11,10 +11,9 @@ const App = () => {
     const [showAll, setShowAll] = useState(true)
 
     useEffect(() => {
-      axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        setNotes(response.data)
+      noteService.getAll()
+      .then(notes => {
+        setNotes(notes)
       })
     }, [])
     
@@ -26,10 +25,14 @@ const App = () => {
         const noteObject = {
           content: newNote,
           date: new Date().toISOString(),
-          important: Math.random() < 0.5,
-          id: notes.length + 1,
+          important: Math.random() < 0.5
         }
-        setNotes(notes.concat(noteObject))
+
+        noteService
+        .create(noteObject)
+        .then(returnedNote => {        
+          setNotes(notes.concat(returnedNote))
+        })
         document.getElementById('inputNote').value=('')
         setNewNote('a new note...')
     }
@@ -42,11 +45,25 @@ const App = () => {
       setShowAll(!showAll)
     }
 
+    const toogleImportanceOf = (id) => {
+      const note = notes.find(n=> n.id === id)
+      const changedNote = {...note, important: !note.important}
+      noteService
+      .update(id, changedNote)
+      .then(returnedNote => {        
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+      .catch(error => {
+        alert(`the note ${note.content} was already deleted from server`)
+        setNotes(notes.filter(n => n.id !== id))
+      })
+    }
+
     return (
       <div>
         <Title text='Notes' />
         <Button action={toogleShow} showAll={showAll} />
-        <NoteList notes={notesToShow}/>
+        <NoteList notes={notesToShow} toogleImportance={toogleImportanceOf}/>
         <Form addNote={addNote} newNote={newNote} handleNoteChange={handleNoteChange} />
       </div>
     );

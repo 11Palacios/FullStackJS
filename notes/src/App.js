@@ -4,6 +4,7 @@ import Form from './components/Form';
 import NoteList from './components/NoteList';
 import Title from './components/Title';
 import noteService from './services.js/notes';
+import './App.css';
 
 const App = () => {
     const [notes, setNotes] = useState([])
@@ -59,11 +60,21 @@ const App = () => {
       })
     }
 
+    const remove = (id) => {
+      let newNotes = [...notes]
+      let filtered = newNotes.filter(note => note.id !== id)
+      noteService
+      .remove(id)
+      .then(
+        setNotes(filtered)
+      )
+    }
+
     return (
-      <div>
-        <Title text='Notes' />
-        <Button action={toogleShow} showAll={showAll} />
-        <NoteList notes={notesToShow} toogleImportance={toogleImportanceOf}/>
+      <div className='main'>
+        <Title text='Notes' className='title'/>
+        <Button action={toogleShow} controller={showAll} text={'show'}/>
+        <NoteList notes={notesToShow} toogleImportance={toogleImportanceOf} remove={remove}/>
         <Form addNote={addNote} newNote={newNote} handleNoteChange={handleNoteChange} />
       </div>
     );

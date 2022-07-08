@@ -1,0 +1,77 @@
+.main{
+    text-align: center;
+}
+h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(rgb(255, 145, 0), #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.button{
+	background-color:#515251;
+	border-radius:28px;
+	border:1px solid #3a3a3a;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:8px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1f201e;
+}
+.button:hover{
+	background-color:#636761;
+}
+.button:active{
+	position:relative;
+	top:1px;
+}
+.button-green {
+	background-color:#44c767;
+	border:1px solid #18ab29;
+	text-shadow:0px 1px 0px #2f6627;
+	padding:16px 31px;
+}
+.button-green:hover {
+	background-color:#5cbf2a;
+}
+.button-orange {
+	background-color:#c7ab44;
+	border:1px solid #e6ad27;
+	text-shadow:0px 1px 0px #665627;
+	padding:16px 31px;
+}
+.button-orange:hover {
+	background-color:#e6ad27;
+}
+.button-form{
+	background-color:#8d99d6;
+	border:1px solid #21a1e7;
+	text-shadow:0px 1px 0px #272a66;
+}
+.button-form:hover{
+	background-color:#2a75bf;
+}
+.button-important{
+	background-color:#f30000;
+	border:1px solid #e1403d;
+	text-shadow:0px 1px 0px #662727;
+}
+.button-important:hover{
+	background-color:#bf2a2a;
+}
+.button-not-important{
+	background-color:#f3b200;
+	border:1px solid #e1ad3d;
+	text-shadow:0px 1px 0px #665027;
+}
+.button-not-important:hover{
+	background-color:#bf952a;
+}
+.note-black{
+	color: black;
+}
+.note-grey{
+	color:grey;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ListItem = ({person}) => {
+const ListItem = ({person, remove}) => {
     return (
-            <p>{person.name} {person.number}</p>
+            <p>{person.name} {person.number} <button onClick={() => {if(window.confirm('delete ' + person.name + '?')){remove(person.id)}}}>delete</button></p>
     );
 }
 

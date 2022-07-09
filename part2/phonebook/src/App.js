@@ -3,12 +3,15 @@ import Filter from './components/Filter';
 import Form from './components/Form';
 import List from './components/List';
 import phoneService from './services.js/persons';
+import './App.css';
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState(null)
     const [newNumber, setNewNumber] = useState(null)
     const [filter, setFilter] = useState('')
+    const [successMessage, setSuccessMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
     
     useEffect(() => {
       phoneService.getAll()
@@ -40,7 +43,9 @@ const App = () => {
             .then(
                 setPersons(prePersons),
                 setNewName(null),
-                setNewNumber(null)
+                setNewNumber(null),
+                setSuccessMessage(`${newName} added successfully to phonebook`),
+                setTimeout(() => {setSuccessMessage(null)},5000)
             )
         //
         
@@ -72,6 +77,10 @@ const App = () => {
         .then(
             setPersons(newPersons)
         )
+        .catch(
+            setErrorMessage(`${newName} failed to update, please, try again`),
+            setTimeout(() => {setErrorMessage(null)},5000)
+        )
     }
 
     const handleInput = (e) => {
@@ -94,12 +103,18 @@ const App = () => {
         }),
         setPersons(newPersons)
         )
+        .catch(
+            setErrorMessage(`Contact already deleted`),
+            setTimeout(() => {setErrorMessage(null)},5000)
+        )
         
     }
 
     return (
         <div>
             <h2>Phonebook</h2>
+            {successMessage !== null ? <div className='success'>{successMessage}</div> : <></>}
+            {errorMessage !== null ? <div className='error'>{errorMessage}</div> : <></>}
             <Filter handleFilter={handleFilter} />
             <Form handleInput={handleInput} handleNumber={handleNumber} submitForm={submitForm} />
             <List persons={persons} filter={filter} remove={remove} />

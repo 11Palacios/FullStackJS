@@ -10,6 +10,7 @@ const App = () => {
     const [notes, setNotes] = useState([])
     const [newNote, setNewNote] = useState('a new note...')
     const [showAll, setShowAll] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
       noteService.getAll()
@@ -55,7 +56,8 @@ const App = () => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
-        alert(`the note ${note.content} was already deleted from server`)
+        setErrorMessage(`the note was already deleted from server`)
+        setTimeout(() => {setErrorMessage(null)}, 5000)
         setNotes(notes.filter(n => n.id !== id))
       })
     }
@@ -68,10 +70,15 @@ const App = () => {
       .then(
         setNotes(filtered)
       )
+      .catch(error => {
+        setErrorMessage(`the note was already deleted from server`)
+        setTimeout(() => {setErrorMessage(null)}, 5000)
+      }
+      )
     }
 
     return (
-      <div className='main'>
+      <div className='main'>{errorMessage !== null ?  <div class='error'>{errorMessage}</div> : <></>}
         <Title text='Notes' className='title'/>
         <Button action={toogleShow} controller={showAll} text={'show'}/>
         <NoteList notes={notesToShow} toogleImportance={toogleImportanceOf} remove={remove}/>

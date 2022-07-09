@@ -73,6 +73,7 @@ app.post('/api/persons/', (request, response) => {
         })
     }
 
+
     const person = {
         name: body.name,
         number: body.number,
@@ -84,6 +85,13 @@ app.post('/api/persons/', (request, response) => {
    response.json(person)
 
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({error: 'unknown endpoint'})
+}
+
+app.use(unknownEndpoint)
+
 
 const PORT = 3001
 app.listen(PORT, () => {

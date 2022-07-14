@@ -78,7 +78,7 @@ const App = () => {
     }
 
     return (
-      <div className='main'>{errorMessage !== null ?  <div class='error'>{errorMessage}</div> : <></>}
+      <div className='main'>{errorMessage !== null ?  <div className='error'>{errorMessage}</div> : <></>}
         <Title text='Notes' className='title'/>
         <Button action={toogleShow} controller={showAll} text={'show'}/>
         <NoteList notes={notesToShow} toogleImportance={toogleImportanceOf} remove={remove}/>
